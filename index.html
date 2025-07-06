@@ -135,6 +135,12 @@
         }
         .card-back {
             transform: rotateY(180deg);
+            display: flex; /* Ensure it's a flex container */
+            flex-direction: column; /* Stack children vertically */
+            justify-content: flex-start; /* Align children from the top */
+            align-items: center; /* Center horizontally */
+            padding: 1.5rem; /* Existing padding */
+            overflow: hidden; /* Hide overflow initially, let backMainContent handle it */
         }
         .card-container.flipped .card-front {
             transform: rotateY(-180deg);
@@ -453,6 +459,54 @@
         body.light-theme .custom-scrollbar::-webkit-scrollbar-thumb {
             background: var(--light-neon-glow);
         }
+
+        /* --- NEW CSS FOR BACK CONTENT SCROLLING --- */
+        #backMainContent {
+            display: flex; /* Keep it as flex */
+            flex-direction: column; /* Stack items vertically */
+            align-items: center; /* Center items */
+            gap: 0.75rem; /* Reduced gap slightly to save space, was 1rem before */
+            flex-grow: 1; /* Allow it to grow and take available space */
+            width: 100%; /* Ensure it takes full width */
+            overflow-y: auto; /* IMPORTANT: Makes it scrollable */
+            padding-bottom: 1rem; /* Add some padding at the bottom for scrolling */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+            /* max-height: 100%; removed this as flex-grow should handle it */
+        }
+
+        /* Custom scrollbar for back main content, similar to about section */
+        #backMainContent::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #backMainContent::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        #backMainContent::-webkit-scrollbar-thumb {
+            background: var(--dark-neon-glow);
+            border-radius: 10px;
+        }
+
+        body.light-theme #backMainContent::-webkit-scrollbar-thumb {
+            background: var(--light-neon-glow);
+        }
+
+        /* Adjust gap for profile-mode-switcher buttons to prevent overflow */
+        .profile-mode-switcher .flex {
+            gap: 0.5rem; /* Ensure tighter spacing */
+            margin-top: 0.5rem; /* Reduce top margin */
+            flex-wrap: wrap; /* Ensure buttons wrap on smaller screens */
+            justify-content: center; /* Center them when wrapped */
+        }
+
+        .profile-mode-switcher button {
+            padding: 0.5rem 0.8rem; /* Slightly reduced padding */
+            font-size: 0.75rem; /* Slightly smaller font size */
+        }
+        /* --- END NEW CSS --- */
+
     </style>
 </head>
 <body>
@@ -467,12 +521,12 @@
             </button>
             <div id="lottie-background"></div>
             <div class="flex flex-col items-center gap-2">
-                <img src="https://i.ibb.co/ZR0d1xTz/Gemini-Generated-Image-b0k237b0k237b0k2.png" alt="Profile Picture" class="profile-img" id="profileImage"> <h1 class="name" id="profileName">Raaj (Med Student)</h1> <p class="tagline" id="profileTagline">Dedicated to Healing & Discovery</p> <div class="micro-stats flex justify-center gap-2">
+                <img src="https://i.ibb.co/ZR0d1xTz/Gemini-Generated-Image-b0k237b0k237b0k2.png" alt="Profile Picture" class="profile-img" id="profileImage"> <h1 class="name" id="profileName">Dr. Raaj (Med Student)</h1> <p class="tagline" id="profileTagline">Dedicated to Healing & Discovery</p> <div class="micro-stats flex justify-center gap-2">
                 </div>
             </div>
             <div class="flex flex-col items-center gap-2 w-full flex-grow">
                 <div class="contact-info text-center">
-                    <p class="text-lg"><i class="fas fa-phone mr-2"></i> <span id="phoneNumber" class="cursor-pointer hover:underline">+91 984051234567</span></p> <p class="text-lg mt-2"><i class="fas fa-envelope mr-2"></i> <span id="emailAddress" class="cursor-pointer hover:underline">alex.smith.med@email.com</span></p> </div>
+                    <p class="text-lg"><i class="fas fa-phone mr-2"></i> <span id="phoneNumber" class="cursor-pointer hover:underline">+91 984061234567</span></p> <p class="text-lg mt-2"><i class="fas fa-envelope mr-2"></i> <span id="emailAddress" class="cursor-pointer hover:underline">rajithraaj.r@email.com</span></p> </div>
                 <div class="social-icons flex gap-6 text-3xl mt-2">
                     </div>
                 <div class="action-buttons flex flex-wrap justify-center gap-4 w-full px-4 mt-2">
@@ -481,7 +535,7 @@
             </div>
         </div>
         <div class="card card-back" id="cardBack">
-            <h2 class="text-3xl font-bold mb-6 mt-4">Explore My Med Journey!</h2> <img src="https://i.ibb.co/B2TY0s4G/Gemini-Generated-Image-8b12588b12588b12.png" alt="Raaj" class="back-profile-img"> <div class="flex flex-col items-center gap-4 mt-6" id="backMainContent">
+            <h2 class="text-3xl font-bold mb-6 mt-4">Explore My Med Journey!</h2> <img src="https://i.ibb.co/B2TY0s4G/Gemini-Generated-Image-8b12588b12588b12.png" alt="Dr. Raaj" class="back-profile-img"> <div class="flex flex-col items-center gap-4 mt-6" id="backMainContent">
                 <button class="action-button" id="aboutMeButton"><i class="fas fa-user-md"></i> My Bio & Goals</button> <button class="action-button" id="copyEmailBack"><i class="fas fa-envelope"></i> Copy Email</button>
                 <button class="action-button" id="copyPhoneBack"><i class="fas fa-phone"></i> Copy Phone</button>
                 <div class="profile-mode-switcher flex flex-col items-center gap-3 mt-4">
@@ -506,10 +560,10 @@
         // --- Configuration & Data ---
         const profileData = {
             "Clinical Rotations": { // New Mode
-                name: "Raaj",
+                name: "Dr. Raaj",
                 tagline: "Currently in Pediatrics Rotation",
-                phoneNumber: "+91 984051234567",
-                emailAddress: "alex.smith.med@email.com",
+                phoneNumber: "+91 984061234567",
+                emailAddress: "rajithraaj.r@gmail.com",
                 microStats: ["Year 3 Med Student", "Pediatrics Focus", "Acute Care Certified"],
                 social: {
                     website: "https://www.medicalblogexample.com", // Example medical blog
@@ -538,10 +592,10 @@
                 `
             },
             "Research & Academics": { // New Mode
-                name: "Raaj",
+                name: "Dr. Raaj",
                 tagline: "Bridging Science & Clinical Practice",
-                phoneNumber: "+91 984051234567",
-                emailAddress: "alex.smith.med@email.com",
+                phoneNumber: "+91 98401234567",
+                emailAddress: "rajithraaj.r@gmail.com",
                 microStats: ["Published Researcher", "Medical Honors Society", "Grant Recipient"],
                 social: {
                     website: "https://www.researchgate.net/profile/Alex-Smith", // Example ResearchGate
@@ -568,10 +622,10 @@
                 `
             },
             "Community & Wellness": { // New Mode
-                name: "Raaj",
+                name: "Dr. Raaj",
                 tagline: "Holistic Health Advocate",
-                phoneNumber: "+91 984051234567",
-                emailAddress: "alex.smith.med@email.com",
+                phoneNumber: "+91 984012345678",
+                emailAddress: "rajithraaj.r@gmail.com",
                 microStats: ["Student Org Leader", "Volunteer Clinic", "Mindfulness Practitioner"],
                 social: {
                     website: "https://www.studentwellnessinitiative.org", // Example wellness initiative
